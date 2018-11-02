@@ -3,6 +3,13 @@ package Game;
 import People.Person;
 import Rooms.Room;
 import Rooms.WinningRoom;
+import Rooms.Death1;
+import Rooms.Death2;
+import Rooms.Death3;
+import Rooms.Death4;
+import Rooms.ShieldRoom;
+import Rooms.PendantRoom;
+
 
 import java.util.Scanner;
 
@@ -13,7 +20,7 @@ public class Runner {
 	
 	public static void main(String[] args)
 	{
-		Room[][] building = new Room[5][5];
+		Room[][] building = new Room[100][100];
 		
 		//Fill the building with normal rooms
 		for (int x = 0; x<building.length; x++)
