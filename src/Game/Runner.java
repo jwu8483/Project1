@@ -37,7 +37,7 @@ public class Runner {
 		building[x][y] = new WinningRoom(x, y);
 		int x1 = (int)(Math.random()*building.length);
 		int y1 = (int)(Math.random()*building.length);
-		while (x1 == x && y ==y1)//Creates death Room1
+		while (x1 == x && y ==y1)//Creates death Room1a
 		{
 			 x1 = (int)(Math.random()*building.length);
 			 y1 = (int)(Math.random()*building.length);
