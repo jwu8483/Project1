@@ -20,7 +20,7 @@ public class Runner {
 	
 	public static void main(String[] args)
 	{
-		Room[][] building = new Room[100][100];
+		Room[][] building = new Room[2][2];
 		
 		//Fill the building with normal rooms
 		for (int x = 0; x<building.length; x++)
@@ -35,6 +35,14 @@ public class Runner {
 		int x = (int)(Math.random()*building.length);
 		int y = (int)(Math.random()*building.length);
 		building[x][y] = new WinningRoom(x, y);
+		int x1 = (int)(Math.random()*building.length);
+		int y1 = (int)(Math.random()*building.length);
+		while (x1 == x && y ==y1)
+		{
+			 x1 = (int)(Math.random()*building.length);
+			 y1 = (int)(Math.random()*building.length);
+		}
+		building[x1][y1] = new Death1(x1,y1);
 		 
 		 //Setup player 1 and the input scanner
 		Person player1 = new Person("FirstName", "FamilyName", 0,0);
