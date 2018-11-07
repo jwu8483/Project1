@@ -47,11 +47,18 @@ public class Runner {
 		int y2 = (int)(Math.random()*building.length);
 		while (x == x2 && y ==y2 ||x1 == x2 && y1==y2)//Creates death Room1a
 		{
-			x2 = (int)(Math.random()*building.length);
-			y2 = (int)(Math.random()*building.length);
+			x2 = (int) (Math.random() * building.length);
+			y2 = (int) (Math.random() * building.length);
 		}
 		building[x2][y2] = new Death2(x2,y2);
-		 
+		int x3 = (int)(Math.random()*building.length);
+		int y3 = (int)(Math.random()*building.length);
+		while (x == x3 && y ==y3 ||x1 == x3 && y1==y3 || x2 == x3 && y2 == y3)//Creates death Room1a
+		{
+			x3 = (int) (Math.random() * building.length);
+			y3 = (int) (Math.random() * building.length);
+		}
+		building[x3][y3] = new Death3(x3,y3);
 		 //Setup player 1 and the input scanner
 		Person player1 = new Person( 0,0, 10 );
 		building[0][0].enterRoom(player1);
