@@ -20,7 +20,7 @@ public class Runner {
 	
 	public static void main(String[] args)
 	{
-		Room[][] building = new Room[2][2];
+		Room[][] building = new Room[5][5];
 		
 		//Fill the building with normal rooms
 		for (int x = 0; x<building.length; x++)
@@ -43,14 +43,22 @@ public class Runner {
 			 y1 = (int)(Math.random()*building.length);
 		}
 		building[x1][y1] = new Death1(x1,y1);
+		int x2 = (int)(Math.random()*building.length);
+		int y2 = (int)(Math.random()*building.length);
+		while (x == x2 && y ==y2 ||x1 == x2 && y1==y2)//Creates death Room1a
+		{
+			x2 = (int)(Math.random()*building.length);
+			y2 = (int)(Math.random()*building.length);
+		}
+		building[x2][y2] = new Death2(x2,y2);
 		 
 		 //Setup player 1 and the input scanner
-		Person player1 = new Person("FirstName", "FamilyName", 0,0);
+		Person player1 = new Person( 0,0, 10 );
 		building[0][0].enterRoom(player1);
 		Scanner in = new Scanner(System.in);
 		while(gameOn)
 		{
-			System.out.println("Where would you like to move? (Choose N, S, E, W)");
+			System.out.println("Where will you go? (Choose N, S, E, W)");
 			String move = in.nextLine();
 			if(validMove(move, player1, building))
 			{
@@ -58,7 +66,7 @@ public class Runner {
 				
 			}
 			else {
-				System.out.println("Please choose a valid move.");
+				System.out.println("A wall blocks your path");
 			}
 			
 			
