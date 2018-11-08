@@ -1,6 +1,7 @@
 package Game;
 
 import People.Person;
+import People.Enemy1;
 import Rooms.Room;
 import Rooms.WinningRoom;
 import Rooms.Death1;
@@ -59,8 +60,19 @@ public class Runner {
 			y3 = (int) (Math.random() * building.length);
 		}
 		building[x3][y3] = new Death3(x3,y3);
+		int x4 = (int)(Math.random()*building.length);
+		int y4 = (int)(Math.random()*building.length);
+		while (x == x4 && y ==y4 ||x1 == x4 && y1==y4 || x2 == x4 && y2 == y4 || y3 == y4 && x3 == x4)//Creates death Room1a
+		{
+			x4 = (int) (Math.random() * building.length);
+			y4 = (int) (Math.random() * building.length);
+		}
+		building[x4][y4] = new Death3(x4,y4);
 		 //Setup player 1 and the input scanner
+		int r1 =(int)(Math.random() * 5 + 1);
+		int r2 =(int)(Math.random() * 5 + 1);
 		Person player1 = new Person( 0,0, 10 );
+		Enemy1 enemy1 = new Enemy1 ( r1,r2);
 		building[0][0].enterRoom(player1);
 		Scanner in = new Scanner(System.in);
 		while(gameOn)
@@ -69,13 +81,13 @@ public class Runner {
 			String move = in.nextLine();
 			if(validMove(move, player1, building))
 			{
+				System.out.println("You have " + player1.gethealth() + " Health");
 				System.out.println("Your coordinates: row = " + player1.getxLoc() + " col = " + player1.getyLoc());
-				
+
 			}
 			else {
 				System.out.println("A wall blocks your path");
 			}
-			
 			
 		}
 		in.close();
