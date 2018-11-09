@@ -1,23 +1,24 @@
 package Rooms;
 
+import People.Enemy1;
 import People.Person;
 
 public class Room {
 	Person occupant;
-	int xLoc,yLoc;
-	
-	public Room(int x, int y)
-	{
+	Enemy1 occupant1;
+	int xLoc, yLoc;
+
+	public Room(int x, int y) {
 		xLoc = x;
 		yLoc = y;
 	}
 
 	/**
 	 * Method controls the results when a person enters this room.
+	 *
 	 * @param x the Person entering
 	 */
-	public void enterRoom(Person x)
-	{
+	public void enterRoom(Person x) {
 		System.out.println("You enter a plain old room");
 		occupant = x;
 		x.setxLoc(this.xLoc);
@@ -26,9 +27,25 @@ public class Room {
 
 	/**
 	 * Removes the player from the room.
+	 *
 	 * @param x
 	 */
-	public void leaveRoom(Person x)
+	public void leaveRoom(Person x) {
+		occupant = null;
+	}
+
+	public void EenterRoom(Enemy1 a)
+	{
+		occupant1 = a;
+		a.setx1Loc(this.xLoc);
+		a.sety1Loc(this.yLoc);
+	}
+
+	/**
+	 * Removes the player from the room.
+	 * @param x
+	 */
+	public void EleaveRoom(Enemy1 x)
 	{
 		occupant = null;
 	}

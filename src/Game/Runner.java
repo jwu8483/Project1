@@ -21,7 +21,7 @@ public class Runner {
 	
 	public static void main(String[] args)
 	{
-		Room[][] building = new Room[5][5];
+		Room[][] building = new Room[2][2];
 		
 		//Fill the building with normal rooms
 		for (int x = 0; x<building.length; x++)
@@ -32,7 +32,7 @@ public class Runner {
 			}
 		}
 		
-		//Create a random winning room.
+		/*//Create a random winning room.
 		int x = (int)(Math.random()*building.length);
 		int y = (int)(Math.random()*building.length);
 		building[x][y] = new WinningRoom(x, y);
@@ -68,17 +68,34 @@ public class Runner {
 			y4 = (int) (Math.random() * building.length);
 		}
 		building[x4][y4] = new Death3(x4,y4);
+		*/
 		 //Setup player 1 and the input scanner
-		int r1 =(int)(Math.random() * 5 + 1);
-		int r2 =(int)(Math.random() * 5 + 1);
+		int r1 =(int)(Math.random() * 1 + 1);
+		int r2 =(int)(Math.random() * 1 + 1);
 		Person player1 = new Person( 0,0, 10 );
-		Enemy1 enemy1 = new Enemy1 ( r1,r2);
+		Enemy1 bad1 = new Enemy1 ( r1,r2);
 		building[0][0].enterRoom(player1);
+		building[r1][r2].EenterRoom(bad1);
 		Scanner in = new Scanner(System.in);
 		while(gameOn)
 		{
 			System.out.println("Where will you go? (Choose N, S, E, W)");
 			String move = in.nextLine();
+			int emove = (int)(Math.random() * 4 + 1);
+			if (EvalidMove(emove,bad1,building))
+			{
+				if(bad1.getx1Loc() == player1.getxLoc() && bad1.gety1Loc() == player1.getyLoc())
+				{
+					int a = player1.gethealth();
+					a = a -1;
+					player1.gethealth(a);
+					System.out.println("You Feel a Presence near by -1 hp");
+				}
+				else {
+					System.out.println("You should be safe");
+				}
+				}
+
 			if(validMove(move, player1, building))
 			{
 				System.out.println("You have " + player1.gethealth() + " Health");
@@ -88,6 +105,7 @@ public class Runner {
 			else {
 				System.out.println("A wall blocks your path");
 			}
+
 			
 		}
 		in.close();
@@ -153,6 +171,62 @@ public class Runner {
 			default:
 				break;
 					
+		}
+		return true;
+	}
+	public static boolean EvalidMove(int emove, Enemy1 a, Room[][] map)
+	{
+
+		switch (emove) {
+			case 1:
+				if (a.getx1Loc() > 0)
+				{
+					map[a.getx1Loc()][a.gety1Loc()].EleaveRoom(a);
+					map[a.getx1Loc()-1][a.gety1Loc()].EenterRoom(a);
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			case 2:
+				if (a.gety1Loc()< map[a.gety1Loc()].length -1)
+				{
+					map[a.getx1Loc()][a.gety1Loc()].EleaveRoom(a);
+					map[a.getx1Loc()][a.gety1Loc() + 1].EenterRoom(a);
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+
+			case 3:
+				if (a.getx1Loc() < map.length - 1)
+				{
+					map[a.getx1Loc()][a.gety1Loc()].EleaveRoom(a);
+					map[a.getx1Loc()+1][a.gety1Loc()].EenterRoom(a);
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+
+			case 4:
+				if (a.gety1Loc() > 0)
+				{
+					map[a.getx1Loc()][a.gety1Loc()].EleaveRoom(a);
+					map[a.getx1Loc()][a.gety1Loc()-1].EenterRoom(a);
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			default:
+				break;
+
 		}
 		return true;
 	}
