@@ -18,7 +18,7 @@ public class Runner {
 	private static boolean gameOn = true;
 
 	public static void main(String[] args) {
-		Room[][] building = new Room[2][2];
+		Room[][] building = new Room[7][7];
 
 		//Fill the building with normal rooms
 		for (int x = 0; x < building.length; x++) {
