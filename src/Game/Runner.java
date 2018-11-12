@@ -1,5 +1,6 @@
 package Game;
 
+import People.Enemy2;
 import People.Person;
 import People.Enemy1;
 import Rooms.Room;
@@ -7,32 +8,26 @@ import Rooms.WinningRoom;
 import Rooms.Death1;
 import Rooms.Death2;
 import Rooms.Death3;
-import Rooms.Death4;
-import Rooms.ShieldRoom;
-import Rooms.PendantRoom;
 
 
 import java.util.Scanner;
 
 public class Runner {
-	
+
 
 	private static boolean gameOn = true;
-	
-	public static void main(String[] args)
-	{
+
+	public static void main(String[] args) {
 		Room[][] building = new Room[2][2];
-		
+
 		//Fill the building with normal rooms
-		for (int x = 0; x<building.length; x++)
-		{
-			for (int y = 0; y < building[x].length; y++)
-			{
-				building[x][y] = new Room(x,y);
+		for (int x = 0; x < building.length; x++) {
+			for (int y = 0; y < building[x].length; y++) {
+				building[x][y] = new Room(x, y);
 			}
 		}
 		
-		/*//Create a random winning room.
+		//Create a random winning room.
 		int x = (int)(Math.random()*building.length);
 		int y = (int)(Math.random()*building.length);
 		building[x][y] = new WinningRoom(x, y);
@@ -68,160 +63,141 @@ public class Runner {
 			y4 = (int) (Math.random() * building.length);
 		}
 		building[x4][y4] = new Death3(x4,y4);
-		*/
-		 //Setup player 1 and the input scanner
-		int r1 =(int)(Math.random() * 1 + 1);
-		int r2 =(int)(Math.random() * 1 + 1);
-		Person player1 = new Person( 0,0, 10 );
-		Enemy1 bad1 = new Enemy1 ( r1,r2);
+		int r1 = (int) (Math.random() * 1 + 1);
+		int r2 = (int) (Math.random() * 1 + 1);
+		Person player1 = new Person(0, 0, 10);
+		Enemy1 bad1 = new Enemy1(r1, r2);
+		 r1 = (int) (Math.random() * 1 + 1);
+		 r2 = (int) (Math.random() * 1 + 1);
+		Enemy2 bad2 = new Enemy2(r1,r2);
 		building[0][0].enterRoom(player1);
 		building[r1][r2].EenterRoom(bad1);
 		Scanner in = new Scanner(System.in);
-		while(gameOn)
-		{
+		while (gameOn) {
 			System.out.println("Where will you go? (Choose N, S, E, W)");
 			String move = in.nextLine();
-			int emove = (int)(Math.random() * 4 + 1);
-			if (EvalidMove(emove,bad1,building))
-			{
-				if(bad1.getx1Loc() == player1.getxLoc() && bad1.gety1Loc() == player1.getyLoc())
-				{
+			int emove = (int) (Math.random() * 4 + 1);
+			if (EvalidMove(emove, bad1, building)) {
+				if (bad1.getx1Loc() == player1.getxLoc() && bad1.gety1Loc() == player1.getyLoc()) {
 					int a = player1.gethealth();
-					a = a -1;
+					a = a - 1;
 					player1.gethealth(a);
 					System.out.println("You Feel a Presence near by -1 hp");
-				}
-				else {
+				} else {
 					System.out.println("You should be safe");
 				}
+			}
+			if (E1validMove(emove, bad2, building)) {
+				if (bad2.getx2Loc() == player1.getxLoc() && bad2.gety2Loc() == player1.getyLoc()) {
+					int a = player1.gethealth();
+					a = a - 1;
+					player1.gethealth(a);
+					System.out.println("You Feel a Presence near by -1 hp");
+				} else {
+					System.out.println("You should be safe");
 				}
+			}
 
-			if(validMove(move, player1, building))
-			{
+			if (validMove(move, player1, building)) {
 				System.out.println("You have " + player1.gethealth() + " Health");
 				System.out.println("Your coordinates: row = " + player1.getxLoc() + " col = " + player1.getyLoc());
 
-			}
-			else {
+			} else {
 				System.out.println("A wall blocks your path");
 			}
 
-			
+
 		}
 		in.close();
 	}
 
 	/**
 	 * Checks that the movement chosen is within the valid game map.
+	 *
 	 * @param move the move chosen
-	 * @param p person moving
-	 * @param map the 2D array of rooms
+	 * @param p    person moving
+	 * @param map  the 2D array of rooms
 	 * @return
 	 */
-	public static boolean validMove(String move, Person p, Room[][] map)
-	{
+	public static boolean validMove(String move, Person p, Room[][] map) {
 		move = move.toLowerCase().trim();
 		switch (move) {
 			case "n":
-				if (p.getxLoc() > 0)
-				{
+				if (p.getxLoc() > 0) {
 					map[p.getxLoc()][p.getyLoc()].leaveRoom(p);
-					map[p.getxLoc()-1][p.getyLoc()].enterRoom(p);
+					map[p.getxLoc() - 1][p.getyLoc()].enterRoom(p);
 					return true;
-				}
-				else
-				{
+				} else {
 					return false;
 				}
 			case "e":
-				if (p.getyLoc()< map[p.getyLoc()].length -1)
-				{
+				if (p.getyLoc() < map[p.getyLoc()].length - 1) {
 					map[p.getxLoc()][p.getyLoc()].leaveRoom(p);
 					map[p.getxLoc()][p.getyLoc() + 1].enterRoom(p);
 					return true;
-				}
-				else
-				{
+				} else {
 					return false;
 				}
 
 			case "s":
-				if (p.getxLoc() < map.length - 1)
-				{
+				if (p.getxLoc() < map.length - 1) {
 					map[p.getxLoc()][p.getyLoc()].leaveRoom(p);
-					map[p.getxLoc()+1][p.getyLoc()].enterRoom(p);
+					map[p.getxLoc() + 1][p.getyLoc()].enterRoom(p);
 					return true;
-				}
-				else
-				{
+				} else {
 					return false;
 				}
 
 			case "w":
-				if (p.getyLoc() > 0)
-				{
+				if (p.getyLoc() > 0) {
 					map[p.getxLoc()][p.getyLoc()].leaveRoom(p);
-					map[p.getxLoc()][p.getyLoc()-1].enterRoom(p);
+					map[p.getxLoc()][p.getyLoc() - 1].enterRoom(p);
 					return true;
-				}
-				else
-				{
+				} else {
 					return false;
 				}
 			default:
 				break;
-					
+
 		}
 		return true;
 	}
-	public static boolean EvalidMove(int emove, Enemy1 a, Room[][] map)
-	{
 
-		switch (emove) {
+	public static boolean EvalidMove(int e1move, Enemy1 a, Room[][] map) {
+
+		switch (e1move) {
 			case 1:
-				if (a.getx1Loc() > 0)
-				{
+				if (a.getx1Loc() > 0) {
 					map[a.getx1Loc()][a.gety1Loc()].EleaveRoom(a);
-					map[a.getx1Loc()-1][a.gety1Loc()].EenterRoom(a);
+					map[a.getx1Loc() - 1][a.gety1Loc()].EenterRoom(a);
 					return true;
-				}
-				else
-				{
+				} else {
 					return false;
 				}
 			case 2:
-				if (a.gety1Loc()< map[a.gety1Loc()].length -1)
-				{
+				if (a.gety1Loc() < map[a.gety1Loc()].length - 1) {
 					map[a.getx1Loc()][a.gety1Loc()].EleaveRoom(a);
 					map[a.getx1Loc()][a.gety1Loc() + 1].EenterRoom(a);
 					return true;
-				}
-				else
-				{
+				} else {
 					return false;
 				}
 
 			case 3:
-				if (a.getx1Loc() < map.length - 1)
-				{
+				if (a.getx1Loc() < map.length - 1) {
 					map[a.getx1Loc()][a.gety1Loc()].EleaveRoom(a);
-					map[a.getx1Loc()+1][a.gety1Loc()].EenterRoom(a);
+					map[a.getx1Loc() + 1][a.gety1Loc()].EenterRoom(a);
 					return true;
-				}
-				else
-				{
+				} else {
 					return false;
 				}
 
 			case 4:
-				if (a.gety1Loc() > 0)
-				{
+				if (a.gety1Loc() > 0) {
 					map[a.getx1Loc()][a.gety1Loc()].EleaveRoom(a);
-					map[a.getx1Loc()][a.gety1Loc()-1].EenterRoom(a);
+					map[a.getx1Loc()][a.gety1Loc() - 1].EenterRoom(a);
 					return true;
-				}
-				else
-				{
+				} else {
 					return false;
 				}
 			default:
@@ -230,11 +206,54 @@ public class Runner {
 		}
 		return true;
 	}
-	public static void gameOff()
-	{
-		gameOn = false;
+
+	public static boolean E1validMove(int emove, Enemy2 b, Room[][] map) {
+
+		switch (emove) {
+			case 1:
+				if (b.getx2Loc() > 0) {
+					map[b.getx2Loc()][b.gety2Loc()].E1leaveRoom(b);
+					map[b.getx2Loc() - 1][b.gety2Loc()].E1enterRoom(b);
+					return true;
+				} else {
+					return false;
+				}
+			case 2:
+				if (b.gety2Loc() < map[b.gety2Loc()].length - 1) {
+					map[b.getx2Loc()][b.gety2Loc()].E1leaveRoom(b);
+					map[b.getx2Loc()][b.gety2Loc() + 1].E1enterRoom(b);
+					return true;
+				} else {
+					return false;
+				}
+
+			case 3:
+				if (b.getx2Loc() < map.length - 1) {
+					map[b.getx2Loc()][b.gety2Loc()].E1leaveRoom(b);
+					map[b.getx2Loc() + 1][b.gety2Loc()].E1enterRoom(b);
+					return true;
+				} else {
+					return false;
+				}
+
+			case 4:
+				if (b.gety2Loc() > 0) {
+					map[b.getx2Loc()][b.gety2Loc()].E1leaveRoom(b);
+					map[b.getx2Loc()][b.gety2Loc() - 1].E1enterRoom(b);
+					return true;
+				} else {
+					return false;
+				}
+			default:
+				break;
+
+		}
+		return true;
 	}
-	
+		public static void gameOff()
+		{
+			gameOn = false;
+		}
 
 
-}
+	}
