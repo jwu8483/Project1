@@ -1,11 +1,13 @@
 package Rooms;
 
 import People.Enemy1;
+import People.Enemy2;
 import People.Person;
 
 public class Room {
 	Person occupant;
 	Enemy1 occupant1;
+	Enemy2 occupant2;
 	int xLoc, yLoc;
 
 	public Room(int x, int y) {
@@ -49,5 +51,19 @@ public class Room {
 	{
 		occupant = null;
 	}
-	
+	public void E1enterRoom(Enemy2 b)
+	{
+		occupant2 = b;
+		b.setx2Loc(this.xLoc);
+		b.sety2Loc(this.yLoc);
+	}
+
+	/**
+	 * Removes the player from the room.
+	 * @param x
+	 */
+	public void E1leaveRoom(Enemy2 x)
+	{
+		occupant = null;
+	}
 }
